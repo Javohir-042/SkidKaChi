@@ -8,7 +8,8 @@ async function start() {
   const PORT = process.env.PORT;
   const app = await NestFactory.create(AppModule, {
     logger: ["error", "warn"],
-  });
+  });        
+  
   app.use(cookieParser());
 
   app.setGlobalPrefix('api')
