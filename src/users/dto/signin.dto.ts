@@ -3,7 +3,7 @@ import { IsEmail, IsNotEmpty, IsString, IsStrongPassword } from "class-validator
 
 export class SigninUserDto {
     @ApiProperty({
-        example: 'javohir123@gmail.com',
+        example: 'javohirquromboyev933@gmail.com',
         description: "Foydalanuvchining elektron pochtasi",
     })
     @IsEmail()
@@ -12,7 +12,7 @@ export class SigninUserDto {
     email: string;
 
     @ApiProperty({
-        example: "Javohir123!",
+        example: "Javohir_Quromboyev_042",
         description: 'foydalanuvchi paroli'
     })
     @IsString()

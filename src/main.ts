@@ -20,6 +20,11 @@ async function start() {
     .setDescription('The Skidkachi API description')
     .setVersion('1.0')
     .addTag('Nest, access and refresh tokens, cookies, NodeMailer, Bot and othenpm install --save @nestjs/swaggerrs...')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'Bearer',
+      in: 'Header',
+    })
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

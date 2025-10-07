@@ -20,7 +20,7 @@ export class CreateUserDto {
     phone: string;
 
     @ApiProperty({
-        example: 'javohir123@gmail.com',
+        example: 'javohirquromboyev933@gmail.com',
         description: "Foydalanuvchining elektron pochtasi",
     })
     @IsEmail()
@@ -28,7 +28,7 @@ export class CreateUserDto {
     email: string;
 
     @ApiProperty({
-        example: 'Javohir123!',
+        example: 'Javohir_Quromboyev_042',
         description: "Foydalanuvchi paroli",
     })
     @IsString()
@@ -36,7 +36,7 @@ export class CreateUserDto {
     password: string;
 
     @ApiProperty({
-        example: 'Javohir123!',
+        example: 'Javohir_Quromboyev_042',
         description: "Parolni tasdiqlash uchun qayta kiriting",
     })
     @IsString()

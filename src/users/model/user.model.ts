@@ -27,6 +27,10 @@ export class User extends Model<User, IUserCreationAttr>{
     declare id: number;
 
 
+    @ApiProperty({
+        example: "Javohir",
+        description: 'Foydalanuvchi ismi'
+    })
     @Column({
         type: DataType.STRING(50),
         allowNull: true,
@@ -34,7 +38,10 @@ export class User extends Model<User, IUserCreationAttr>{
     })
     declare name: string;
 
-
+    @ApiProperty({
+        example: "+998976006787",
+        description: 'Foydalanuvchi phon number'
+    })
     @Column({
         type: DataType.STRING(50),
         allowNull: true,
@@ -43,7 +50,7 @@ export class User extends Model<User, IUserCreationAttr>{
     declare phone: string;
 
     @ApiProperty({
-        example: 'user1@mail.uz',
+        example: 'javohirquromboyev933@gmail.com',
         description: 'Foydalanuvchi email'
     })
     @Column({
@@ -53,35 +60,57 @@ export class User extends Model<User, IUserCreationAttr>{
     declare email: string;
 
 
+    @ApiProperty({
+    example: "Javohir_Quromboyev123!",
+        description: 'Foydalanuvchi password'
+    })
     @Column({
         type: DataType.STRING,
     })
     declare password: string;
 
+    @ApiProperty({
+        example: "https://t.me/javohir_042",
+        description: 'Foydalanuvchi tg_link'
+    })
     @Column({
         type: DataType.STRING,
         unique: true
     })
     declare tg_link: string;
 
+
+    @ApiProperty({
+        example: false,
+        description: 'Foydalanuvchi is_active'
+    })
     @Column({
         type: DataType.BOOLEAN,
         defaultValue: false,
     })
     declare is_active: boolean;
 
+    @ApiProperty({
+        example: false,
+        description: 'Foydalanuvchi is_owner'
+    })
     @Column({
         type: DataType.BOOLEAN,
         defaultValue: false,
     })
     declare is_owner: boolean;
 
-
+    @ApiProperty({
+        example: "Tashkent, Uzbekistan",
+        description: 'Foydalanuvchi location'
+    })
     @Column({
         type: DataType.STRING(50),
     })
     declare location: string;
 
+
+    
     @Column({
         type: DataType.STRING(2000),
     })

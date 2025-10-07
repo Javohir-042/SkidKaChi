@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { UserAuthGuard } from '../common/guards/user-auth.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../common/enum/user.enum';
 
+
+@ApiTags("User - Foydalanuvchi")
+@UseGuards(UserAuthGuard)
+@ApiBearerAuth()
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -10,6 +18,12 @@ export class UsersController {
   // create(@Body() createUserDto: CreateUserDto) {
   //   return this.usersService.create(createUserDto);
   // }
+
+  @Roles(Role.SUPERADMIN, Role.ADMIN)
+  @Get("activate/:link")
+  activateUser( @Param("link") link: string) {
+    return this.usersService.activateUser(link);
+  }
 
   @Get()
   findAll() {
