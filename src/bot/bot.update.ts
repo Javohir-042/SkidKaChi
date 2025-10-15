@@ -19,9 +19,53 @@ export class BotUpdate {
   }
 
   @Command("stop")
-  async onStop(@Ctx()ctx: Context) {
+  async onStop(@Ctx() ctx: Context) {
     await this.botService.onStop(ctx)
   }
+
+  @Hears("Asosiy menyu qaytish")                         // yoniga Rus tilida yozib qoysa ham boladi (,) orqali 
+  async mainMenu(@Ctx() ctx: Context) {
+    await this.botService.mainMenu(ctx)
+  }
+
+
+
+  @On("location")
+  async onLocation(@Ctx() ctx: Context) {
+    await this.botService.onLocation(ctx);
+  }
+
+
+  @On("text")
+  async onText(@Ctx() ctx: Context) {
+    return this.botService.onText(ctx)
+  }
+
+  //   @On("message")
+  //   async onMessage(@Ctx() ctx: Context) {
+  //     console.log(ctx.botInfo);
+  //     console.log(ctx.chat);
+  //     console.log(ctx.chat?.type);
+  //     console.log(ctx.from);
+  //     console.log(ctx.from?.username);
+
+  //   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -84,13 +128,6 @@ export class BotUpdate {
   //   }
 
 
-  //   @On("location")
-  //   async onLocation(@Ctx() ctx: Context) {
-  //     if ("location" in ctx.message!) {
-  //       console.log(ctx.message.location)
-  //       await ctx.replyWithLocation(ctx.message.location.latitude, ctx.message.location.longitude);
-  //     }
-  //   }
 
 
   //   @Hears("hi")
@@ -188,32 +225,4 @@ export class BotUpdate {
   //     });
   //   }
 
-
-
-
-
-
-
-  //   @On("text")
-  //   async onText(@Ctx() ctx: Context) {
-  //     console.log(ctx)
-
-  //     if ('text' in ctx.message!) {
-  //       if (ctx.message.text == "hello") {
-  //         await ctx.replyWithHTML("<b>Salom</b>")
-  //       } else {
-  //         await ctx.replyWithHTML(ctx.message.text);
-  //       }
-  //     }
-  //   }
-
-  //   @On("message")
-  //   async onMessage(@Ctx() ctx: Context) {
-  //     console.log(ctx.botInfo);
-  //     console.log(ctx.chat);
-  //     console.log(ctx.chat?.type);
-  //     console.log(ctx.from);
-  //     console.log(ctx.from?.username);
-
-  //   }
 }
