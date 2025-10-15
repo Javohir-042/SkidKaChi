@@ -1,10 +1,11 @@
-import { Controller, Get, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete, UseGuards, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserAuthGuard } from '../common/guards/user-auth.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '../common/enum/user.enum';
+import { PhoneUserDto } from './dto/phone-user.dto';
 
 
 @ApiTags("User - Foydalanuvchi")
@@ -43,5 +44,11 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
+  }
+
+
+  @Post("new-otp")
+  newOtp(@Body() phoneUserDto: PhoneUserDto){
+    return this.usersService.newOtp(phoneUserDto)
   }
 }

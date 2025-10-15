@@ -9,8 +9,6 @@ interface IUserCreationAttr{
     password: string;
     tg_link: string;
     location?: string;
-    // regionId: number;
-    // districtId: number;
 }
 
 @Table({tableName: "user"})

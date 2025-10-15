@@ -5,12 +5,17 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './model/user.model';
 import bcrypt from 'bcrypt'
 import { MailService } from '../mail/mail.service';
+import { PhoneUserDto } from './dto/phone-user.dto';
+
+import otpGenerator from 'otp-generator'
+import { BotService } from '../bot/bot.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User) private readonly userModel: typeof User,
-    private readonly mailService: MailService
+    private readonly mailService: MailService,
+    private readonly botService: BotService
   ) { }
 
 
@@ -57,12 +62,12 @@ export class UsersService {
     return user;
   }
 
-    async activateUser(link: string) {
-    if(!link){
+  async activateUser(link: string) {
+    if (!link) {
       throw new BadRequestException("Activation link not found");
     }
     const updatedUser = await this.userModel.update(
-      {is_active: true},
+      { is_active: true },
       {
         where: {
           activation_link: link,
@@ -86,10 +91,29 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    const user = await this.userModel.destroy({where: {id}})
-    if(!user){
+    const user = await this.userModel.destroy({ where: { id } })
+    if (!user) {
       throw new NotFoundException("User not found")
     }
     return {}
+  }
+
+
+  async newOtp(phoneUserDto: PhoneUserDto) {
+    const phone_number = phoneUserDto.phone_number
+
+    const otp = otpGenerator.generate(4, {
+      upperCaseAlphabets: false,
+      lowerCaseAlphabets: false,
+      specialChars: false,
+    });
+    const isSend = await this.botService.sendOtp(phone_number, otp)
+    if (!isSend) {
+      throw new BadRequestException("Avval botda ro'yxatdan o'ting");
+    }
+
+    return {
+      message: "Botga otp yuborildi",
+    };
   }
 }
