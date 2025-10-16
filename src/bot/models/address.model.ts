@@ -4,6 +4,10 @@ interface IAddressCreationAttr {
     id?:number;
     user_id: number | undefined;
     last_state?: string;
+    model?: string;
+    color?: string;
+    car_number?: string;
+    brand?: string;
 }
 
 @Table({ tableName: 'address' })
@@ -45,6 +49,4 @@ export class Address extends Model<Address, IAddressCreationAttr> {
         type: DataType.STRING(50),
     })
     declare last_state: string;
-
-   
 }

@@ -7,6 +7,8 @@ import { MailModule } from './mail/mail.module';
 import { BotModule } from './bot/bot.module';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { BOT_NAME } from './app.constants';
+import { SmsModule } from './sms/sms.module';
+import { CarModule } from './bot/car/car.module';
 
 @Module({
   imports: [
@@ -41,6 +43,10 @@ import { BOT_NAME } from './app.constants';
     MailModule,
 
     BotModule,
+
+    SmsModule,
+
+    CarModule,  
   ],
   controllers: [],
   providers: [],

@@ -7,6 +7,7 @@ import { Context, Markup, Telegraf } from 'telegraf';
 import { Address } from './models/address.model';
 import { Op } from "sequelize";
 import { AddressService } from './address/address.service';
+import { CarService } from './car/car.service';
 
 
 @Injectable()
@@ -15,8 +16,10 @@ export class BotService {
     @InjectModel(Bot) private readonly botModel: typeof Bot,
     @InjectModel(Address) private readonly addressModel: typeof Address,
     @InjectBot(BOT_NAME) private readonly bot: Telegraf<Context>,
-    private readonly addressService: AddressService
+    private readonly addressService: AddressService,
+    private readonly carService: CarService
   ) { }
+
 
   async start(ctx: Context) {
     try {
@@ -46,19 +49,16 @@ export class BotService {
           })
       } else {
         await this.mainMenu(ctx, `Bu bot orqali skidkachi tizimida faoliyat olib borayotgan Magazin egalari uchun`,);
-
-        // await ctx.replyWithHTML(`Bu bot orqali skidkachi tizimida faoliyat olib borayotgan Magazin egalari uchun`,
-        //   {
-        //     ...Markup.keyboard([["Sozlamalar", "Manzillar"]])
-        //   }) 
       }
     } catch (error) {
       console.log('Error on start', error);
     }
   }
 
+
+
   async onContact(ctx: Context) {
-    try {
+    try {     
       if ('contact' in ctx.message!) {
         const user_id = ctx.from!.id;
         const user = await this.botModel.findByPk(user_id);
@@ -134,8 +134,12 @@ export class BotService {
             }
           }
 
+          
+
 
           //  ---------------------------------- CAR ----------------------
+          await this.carService.onText(ctx);
+          
           //  ---------------------------------- SHOP ----------------------
         }
       } else {
@@ -216,7 +220,7 @@ export class BotService {
         return false;
       }
 
-      await this.bot.telegram.sendMessage(user.user_id, 'Verify code:' + OTP);
+      await this.bot.telegram.sendMessage(user.user_id, 'Verify code:' + OTP);   
       return true;
     } catch (error) {
       console.log('Error on send OTP', error);
@@ -228,13 +232,9 @@ export class BotService {
 
   async mainMenu(ctx: Context, menuText = "Asosiy menusi") {
     try {
-
-      await ctx.replyWithHTML(menuText,
-        {
-          ...Markup.keyboard([["Sozlamalar", "Manzillar"]]).resize(),
-        }
-      );
-
+      await ctx.replyWithHTML(menuText, {
+        ...Markup.keyboard([["Sozlamalar", "Manzillar", "Moshinalar"]]).resize(),
+      });
 
     } catch (error) {
       console.log('Error on mainMenu', error);
